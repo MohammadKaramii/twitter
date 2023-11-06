@@ -1,5 +1,11 @@
-import Image from "next/image";
+import Sidebar  from "@/components/Sidebar";
+
 
 export default function Home() {
-  return <h1>Start of Project</h1>;
+  return (
+    <main className="flex min-h-screen max-w-7xl mx-auto">
+
+      <Sidebar/>
+    </main>
+  );
 }
