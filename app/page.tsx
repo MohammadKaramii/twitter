@@ -29,12 +29,12 @@ export async function getNews() {
 }
 
 export async function getRandomUsers() {
-  const resR = await fetch(
+  const res = await fetch(
     "https://randomuser.me/api/?results=30&inc=name,login,picture",
     { cache: "no-store" }
   );
 
-  const randomUsersResults = await resR.json();
+  const randomUsersResults = await res.json();
 
   return randomUsersResults;
 }

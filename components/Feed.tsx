@@ -10,8 +10,8 @@ const Feed = () => {
       name: "mohammad Karami",
       username: "mrak",
       userImg: "https://placehold.co/600x400/png",
-      img: "https://picsum.photos/id/237/600/400",
-      text: "cute dog!",
+      img: "https://fastly.picsum.photos/id/2/5000/3333.jpg?hmac=_KDkqQVttXw_nM-RyJfLImIbafFrqLsuGO5YuHqD-qQ",
+      text: "A new working day",
       timestamp: "3 hours ago",
     },
     {
@@ -19,8 +19,8 @@ const Feed = () => {
       name: "mohammad Karami",
       username: "mrak",
       userImg: "https://placehold.co/600x400/png",
-      img: "https://picsum.photos/id/238/600/400",
-      text: "city b&w",
+      img: "https://fastly.picsum.photos/id/26/4209/2769.jpg?hmac=vcInmowFvPCyKGtV7Vfh7zWcA_Z0kStrPDW3ppP0iGI",
+      text: "Walking time😉",
       timestamp: "2 weeks ago",
     },
   ];
