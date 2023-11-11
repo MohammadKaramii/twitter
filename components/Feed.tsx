@@ -1,29 +1,29 @@
-import React from "react";
+"use client"
+import React, { useState, useEffect } from "react";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { SparklesIcon } from "@heroicons/react/24/outline";
+import { database } from "@/firebase";
 import Input from "./Input";
 import Post from "./Post";
 
-const Feed = () => {
-  const posts = [
-    {
-      id: 1,
-      name: "mohammad Karami",
-      username: "mrak",
-      userImg: "https://placehold.co/600x400/png",
-      img: "https://fastly.picsum.photos/id/2/5000/3333.jpg?hmac=_KDkqQVttXw_nM-RyJfLImIbafFrqLsuGO5YuHqD-qQ",
-      text: "A new working day",
-      timestamp: "3 hours ago",
-    },
-    {
-      id: 2,
-      name: "mohammad Karami",
-      username: "mrak",
-      userImg: "https://placehold.co/600x400/png",
-      img: "https://fastly.picsum.photos/id/26/4209/2769.jpg?hmac=vcInmowFvPCyKGtV7Vfh7zWcA_Z0kStrPDW3ppP0iGI",
-      text: "Walking time😉",
-      timestamp: "2 weeks ago",
-    },
-  ];
+const Feed : any = () => {
+ const [posts, setPosts] = useState<any>([])
+ useEffect(() => {
+  const unsubscribe = onSnapshot(
+    query(collection(database, "posts"), orderBy("timestamp", "desc")),
+    (snapshot) => {
+      const postsData = snapshot.docs.map((doc) => doc.data());
+      setPosts(postsData);
+      console.log(postsData);
+      
+    }
+  );
+
+  return () => {
+    // Clean up the listener when the component unmounts
+    unsubscribe();
+  };
+}, []);
 
   return (
     <div className="xl:ml-[370px] border-l border-r border-gray-200  xl:min-w-[576px] sm:ml-[73px] flex-grow max-w-xl">
@@ -34,7 +34,7 @@ const Feed = () => {
         </div>
       </div>
       <Input />
-      {posts.map((post) => (
+      {posts.map((post : any) => (
         <Post key={post.id} post={post} />
       ))}
     </div>

@@ -7,23 +7,29 @@ import {
   TrashIcon,
 } from "@heroicons/react/24/outline";
 import React from "react";
+import Moment from "react-moment";
 
 const Post = ({ post }: any) => {
+  const { userImg, name, username, timestamp, text, image } = post;
+console.log(image);
+
   return (
     <div className="flex p-3 cursor-pointer border-b border-gray-200">
-      <img src={post.userImg} alt="user-img" className="h-11 w-11 rounded-full mr-4" />
+      <img src={userImg} alt="user-img" className="h-11 w-11 rounded-full mr-4" />
       <div className="flex-1">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-1 whitespace-nowrap">
-            <h4 className="font-bold text-[15px] sm:text-[16px] hover:underline">{post.name}</h4>
-            <span className="text-sm sm:text-[15px]">@{post.username} -</span>
-            <span className="text-sm sm:text-[15px] hover:underline">{post.timestamp}</span>
+            <h4 className="font-bold text-[15px] sm:text-[16px] hover:underline">{name}</h4>
+            <span className="text-sm sm:text-[15px]">@{username} -</span>
+            <span className="text-sm sm:text-[15px] hover:underline">
+              <Moment fromNow>{timestamp?.toDate()}</Moment>
+            </span>
           </div>
-          <EllipsisHorizontalIcon className="h-10 hoverEffect w-10 hover:bg-sky-100 hover:text-sky-500 p-2 " />
+          <EllipsisHorizontalIcon className="h-10 hoverEffect w-10 hover:bg-sky-100 hover:text-sky-500 p-2" />
         </div>
-        <p  className="text-gray-800 text-[15px sm:text-[16px] mb-2">{post.text}</p>
+        <p className="text-gray-800 text-[15px sm:text-[16px] mb-2">{text}</p>
 
-        <img src={post.img} alt="" className="rounded-2xl mr-2" />
+        <img src={image} alt="" className="rounded-2xl mr-2" />
         <div className="flex justify-between text-gray-500 p-2">
           <ChatBubbleOvalLeftEllipsisIcon className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-sky-100" />
           <TrashIcon className="h-9 w-9 hoverEffect p-2 hover:text-red-600 hover:bg-red-100" />

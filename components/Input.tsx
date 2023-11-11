@@ -8,7 +8,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { database, storage } from "../firebase";
-import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
+import { addDoc, collection, doc, updateDoc, serverTimestamp } from "firebase/firestore";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 
 const Input = () => {
@@ -24,6 +24,12 @@ const Input = () => {
     const docRef = await addDoc(collection(database, "posts"), {
       id: 1,
       text: input,
+      userImg: "https://placehold.co/600x400",
+      timestamp: serverTimestamp(),
+      name: "mrak",
+      username: "Mrak",
+
+    
     });
     const imageRef = ref(storage, `posts/${docRef.id}/image`);
 
