@@ -44,7 +44,7 @@ export default function SginIn () {
     />
     <p className="text-center text-sm italic my-10">
     This app is created for practice purposes</p>
-    <button onClick={() => signIn(provider.id, {callbackUrl:"http://localhost:3000/"})} className="bg-red-400 rounded-lg p-3 text-white hover:bg-red-500">Sign In with {provider.name}</button>
+    <button onClick={() => signIn(provider.id, {callbackUrl:"/"})} className="bg-red-400 rounded-lg p-3 text-white hover:bg-red-500">Sign In with {provider.name}</button>
   </div>
 ))}
       </div>
