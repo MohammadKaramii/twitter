@@ -1,29 +1,32 @@
-"use client"
-import React, { useState, useEffect } from "react";
-import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { SparklesIcon } from "@heroicons/react/24/outline";
-import { database } from "@/firebase";
+import {
+  QueryDocumentSnapshot,
+  collection,
+  onSnapshot,
+  orderBy,
+  query,
+} from "firebase/firestore";
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { database } from "../firebase";
 import Input from "./Input";
 import Post from "./Post";
-
-const Feed : any = () => {
- const [posts, setPosts] = useState<any>([])
- useEffect(() => {
-  const unsubscribe = onSnapshot(
-    query(collection(database, "posts"), orderBy("timestamp", "desc")),
-    (snapshot) => {
-      const postsData = snapshot.docs.map((doc) => doc.data());
-      setPosts(postsData);
-      console.log(postsData);
-      
-    }
+import { DocumentData } from "firebase/firestore";
+export default function Feed() {
+  const [posts, setPosts] = useState<QueryDocumentSnapshot<DocumentData>[]>([]);
+  useEffect(
+    () =>
+      onSnapshot(
+        query(collection(database, "posts"), orderBy("timestamp", "desc")),
+        (snapshot) => {
+          setPosts(snapshot.docs);
+        }
+      ),
+    []
   );
-
-  return () => {
-    // Clean up the listener when the component unmounts
-    unsubscribe();
-  };
-}, []);
+  {
+    posts.map((post) => console.log(post));
+  }
 
   return (
     <div className="xl:ml-[370px] border-l border-r border-gray-200  xl:min-w-[576px] sm:ml-[73px] flex-grow max-w-xl">
@@ -34,11 +37,19 @@ const Feed : any = () => {
         </div>
       </div>
       <Input />
-      {posts.map((post : any) => (
-        <Post key={post.id} post={post} />
-      ))}
+      <AnimatePresence>
+        {posts.map((post) => (
+          <motion.div
+            key={post.id}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+          >
+            <Post key={post.id} id={post.id} post={post} />
+          </motion.div>
+        ))}
+      </AnimatePresence>
     </div>
   );
-};
-
-export default Feed;
+}
