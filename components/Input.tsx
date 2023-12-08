@@ -18,6 +18,7 @@ import { useRecoilState } from "recoil";
 import { userState } from "../atom/userAtom";
 import { signOut, getAuth } from "firebase/auth";
 
+
 export default function Input() {
   const [input, setInput] = useState("");
   const [currentUser, setCurrentUser] = useRecoilState(userState);
@@ -97,6 +98,7 @@ export default function Input() {
                   className="border h-7 text-black absolute cursor-pointer shadow-md border-white m-1 rounded-full"
                 />
                 <img
+                  alt="selected-File"
                   src={selectedFile}
                   className={`${loading && "animate-pulse"}`}
                 />

@@ -20,21 +20,21 @@ const Home: NextPage<HomeProps> = ({ newsResults, randomUsersResults }) => {
       </Head>
 
       <main className="flex min-h-screen mx-auto">
-        {/* Sidebar */}
+
         <Sidebar />
 
-        {/* Feed */}
+     
 
         <Feed />
 
-        {/* Widgets */}
+     
 
         <Widgets
           newsResults={newsResults}
           randomUsersResults={randomUsersResults || null}
         />
 
-        {/* Modal */}
+    
 
         <CommentModal />
       </main>
@@ -42,37 +42,24 @@ const Home: NextPage<HomeProps> = ({ newsResults, randomUsersResults }) => {
   );
 };
 
-// https://saurav.tech/NewsAPI/top-headlines/category/business/us.json
 
-export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
-  const newsResults = await fetch(
-    "https://saurav.tech/NewsAPI/top-headlines/category/business/us.json"
-  ).then((res) => res.json());
 
-  // Who to follow section
+export const getServerSideProps = async () => {
+  const [newsResponse, randomUsersResponse] = await Promise.all([
+    fetch("https://saurav.tech/NewsAPI/top-headlines/category/business/us.json"),
+    fetch("https://randomuser.me/api/?results=30&inc=name,login,picture")
+  ]);
 
-  let randomUsersResults = [];
-
-  try {
-    const res = await fetch(
-      "https://randomuser.me/api/?results=30&inc=name,login,picture"
-    );
-
-    randomUsersResults = await res.json();
-  } catch (e) {
-    randomUsersResults = [];
-  }
-
-  // const randomUsersResults = await fetch(
-  //   "https://randomuser.me/api/?results=30&inc=name,login,picture"
-  // ).then((res) => res.json());
+  const newsResults = await newsResponse.json();
+  const randomUsersResults = await randomUsersResponse.json();
 
   return {
     props: {
       newsResults,
-      randomUsersResults,
-    },
+      randomUsersResults
+    }
   };
 };
+
 
 export default Home;

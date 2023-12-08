@@ -22,7 +22,6 @@ import TwitterIcon from "@/public/icons/twitter-logo.png";
 export default function Sidebar() {
   const router = useRouter();
   const [currentUser, setCurrentUser] = useRecoilState(userState);
-  console.log(currentUser);
   const auth: Auth = getAuth();
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -49,7 +48,7 @@ export default function Sidebar() {
         fetchUser();
       }
     });
-  }, []);
+  }, [auth, setCurrentUser]);
 
   function onSignOut() {
     signOut(auth);

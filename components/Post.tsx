@@ -28,6 +28,7 @@ import { modalState, postIdState } from "../atom/modalAtom";
 import { useRouter } from "next/router";
 import { userState } from "../atom/userAtom";
 
+
 type PostProp = {
   post: DocumentSnapshot<DocumentData> | undefined;
   id: string;
@@ -51,14 +52,14 @@ export default function Post({ post, id }: PostProp) {
       collection(database, "posts", id, "likes"),
       (snapshot) => setLikes(snapshot.docs)
     );
-  }, [database]);
+  }, [ id]);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
       collection(database, "posts", id, "comments"),
       (snapshot) => setComments(snapshot.docs)
     );
-  }, [database]);
+  }, [ id]);
 
   useEffect(() => {
     setHasLiked(likes.findIndex((like) => like.id === currentUser?.uid) !== -1);

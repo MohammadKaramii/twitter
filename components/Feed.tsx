@@ -6,7 +6,6 @@ import {
   orderBy,
   query,
 } from "firebase/firestore";
-import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { database } from "../firebase";
 import Input from "./Input";
@@ -24,9 +23,7 @@ export default function Feed() {
       ),
     []
   );
-  {
-    posts.map((post) => console.log(post));
-  }
+
 
   return (
     <div className="xl:ml-[370px] border-l border-r border-gray-200  xl:min-w-[576px] sm:ml-[73px] flex-grow max-w-xl">
@@ -37,19 +34,12 @@ export default function Feed() {
         </div>
       </div>
       <Input />
-      <AnimatePresence>
-        {posts.map((post) => (
-          <motion.div
-            key={post.id}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1 }}
-          >
-            <Post key={post.id} id={post.id} post={post} />
-          </motion.div>
-        ))}
-      </AnimatePresence>
+
+      {posts.map((post) => (
+        <div key={post.id} className="animate-fadeIn">
+          <Post id={post.id} post={post} />
+        </div>
+      ))}
     </div>
   );
 }

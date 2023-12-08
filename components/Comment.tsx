@@ -17,7 +17,6 @@ import {
 } from "firebase/firestore";
 import { database } from "../firebase";
 import { useState, useEffect } from "react";
-
 import { useRecoilState } from "recoil";
 import { modalState, postIdState } from "../atom/modalAtom";
 import { useRouter } from "next/router";
@@ -46,7 +45,7 @@ export default function Comment({
       collection(database, "posts", originalPostId, "comments", commentId, "likes"),
       (snapshot) => setLikes(snapshot.docs)
     );
-  }, [database, originalPostId, commentId]);
+  }, [originalPostId, commentId]);
 
   useEffect(() => {
     setHasLiked(likes.findIndex((like) => like.id === currentUser?.uid) !== -1);

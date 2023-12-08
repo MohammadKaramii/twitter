@@ -15,7 +15,6 @@ import {
 } from "firebase/firestore";
 import { database } from "../../firebase";
 import Comment from "../../components/Comment";
-import { AnimatePresence, motion } from "framer-motion";
 import { NextPage } from "next";
 import { DocumentData, DocumentSnapshot } from "firebase/firestore";
 import { UserType, ArticleType } from "@/types";
@@ -32,7 +31,7 @@ const PostPage: NextPage<HomeProps> = ({ newsResults, randomUsersResults }) => {
   >();
   const [comments, setComments] = useState<DocumentData[]>([]);
 
-  // get the post data
+ 
 
   useEffect(() => {
     const unsubscribe = onSnapshot(doc(database, "posts", id), (snapshot) =>
@@ -40,8 +39,8 @@ const PostPage: NextPage<HomeProps> = ({ newsResults, randomUsersResults }) => {
     );
 
     return () => unsubscribe();
-  }, [database, id]);
-  // get comments of the post
+  }, [id]);
+  
 
   useEffect(() => {
     onSnapshot(
@@ -51,7 +50,7 @@ const PostPage: NextPage<HomeProps> = ({ newsResults, randomUsersResults }) => {
       ),
       (snapshot) => setComments(snapshot.docs)
     );
-  }, [database, id]);
+  }, [id]);
 
   return (
     <div>
@@ -62,10 +61,10 @@ const PostPage: NextPage<HomeProps> = ({ newsResults, randomUsersResults }) => {
       </Head>
 
       <main className="flex min-h-screen mx-auto">
-        {/* Sidebar */}
+       
         <Sidebar />
 
-        {/* Feed */}
+      
 
         <div className="xl:ml-[370px] border-l border-r border-gray-200  xl:min-w-[576px] sm:ml-[73px] flex-grow max-w-xl">
           <div className="flex items-center space-x-2  py-2 px-3 sticky top-0 z-50 bg-white border-b border-gray-200">
@@ -76,40 +75,34 @@ const PostPage: NextPage<HomeProps> = ({ newsResults, randomUsersResults }) => {
               Tweet
             </h2>
           </div>
-
+          <div className="animate-fadeIn">
           <Post id={id} post={post} />
+           </div>
           {comments.length > 0 && (
             <div className="">
-              <AnimatePresence>
+             
                 {comments.map((comment) => (
-                  <motion.div
-                    key={comment.id}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 1 }}
-                  >
+                <div key={comment.id} className="animate-fadeIn">
                     <Comment
-                      key={comment.id}
+                      
                       commentId={comment.id}
                       originalPostId={id}
                       comment={comment.data()}
                     />
-                  </motion.div>
+                  
+                </div>
                 ))}
-              </AnimatePresence>
             </div>
           )}
         </div>
 
-        {/* Widgets */}
+
 
         <Widgets
           newsResults={newsResults}
           randomUsersResults={randomUsersResults}
         />
 
-        {/* Modal */}
 
         <CommentModal />
       </main>
@@ -117,32 +110,22 @@ const PostPage: NextPage<HomeProps> = ({ newsResults, randomUsersResults }) => {
   );
 };
 
-// https://saurav.tech/NewsAPI/top-headlines/category/business/us.json
 
-export async function getServerSideProps() {
-  const newsResults = await fetch(
-    "https://saurav.tech/NewsAPI/top-headlines/category/business/us.json"
-  ).then((res) => res.json());
 
-  // Who to follow section
+export const getServerSideProps = async () => {
+  const [newsResponse, randomUsersResponse] = await Promise.all([
+    fetch("https://saurav.tech/NewsAPI/top-headlines/category/business/us.json"),
+    fetch("https://randomuser.me/api/?results=30&inc=name,login,picture")
+  ]);
 
-  let randomUsersResults = [];
-
-  try {
-    const res = await fetch(
-      "https://randomuser.me/api/?results=30&inc=name,login,picture"
-    );
-
-    randomUsersResults = await res.json();
-  } catch (e) {
-    randomUsersResults = [];
-  }
+  const newsResults = await newsResponse.json();
+  const randomUsersResults = await randomUsersResponse.json();
 
   return {
     props: {
       newsResults,
-      randomUsersResults,
-    },
+      randomUsersResults
+    }
   };
-}
+};
 export default PostPage;

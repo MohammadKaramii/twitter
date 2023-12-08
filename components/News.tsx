@@ -1,8 +1,8 @@
 import { ArticleNews } from "@/types";
-
+import Link from "next/link";
 export default function News({ articles }: ArticleNews) {
   return (
-    <a rel="noreferrer" href={articles.url} target="_blank">
+    <Link rel="noreferrer" href={articles.url} target="_blank">
       <div className="flex items-center justify-between px-4 py-2 space-x-1 hover:bg-gray-200 transition duration-500 ease-out">
         <div className="space-y-0.5">
           <h6 className="text-sm font-bold">{articles.title}</h6>
@@ -17,6 +17,6 @@ export default function News({ articles }: ArticleNews) {
           alt=""
         />
       </div>
-    </a>
+    </Link>
   );
 }

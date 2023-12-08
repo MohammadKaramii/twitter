@@ -42,7 +42,7 @@ export default function CommentModal() {
     );
 
     return () => unsubscribe();
-  }, [postId, database]);
+  }, [postId]);
 
   async function sendComment() {
     await addDoc(collection(database, "posts", postId, "comments"), {
@@ -80,7 +80,7 @@ export default function CommentModal() {
               <span className="w-0.5 h-full z-[-1] absolute left-8 top-11 bg-gray-300" />
               <img
                 className="h-11 w-11 rounded-full mr-4"
-                src={post?.userImg}
+                src={post?.userImg!}
                 alt="user-img"
               />
               <h4 className="font-bold text-[15px] sm:text-[16px] hover:underline">
@@ -99,7 +99,7 @@ export default function CommentModal() {
 
             <div className="flex  p-3 space-x-3">
               <img
-                src={currentUser?.userImg}
+                src={currentUser?.userImg!}
                 alt="user-img"
                 className="h-11 w-11 rounded-full cursor-pointer hover:brightness-95"
               />
@@ -118,15 +118,9 @@ export default function CommentModal() {
                   <div className="flex">
                     <div
                       className=""
-                      // onClick={() => filePickerRef.current.click()}
+        
                     >
                       <PhotoIcon className="h-10 w-10 hoverEffect p-2 text-sky-500 hover:bg-sky-100" />
-                      {/* <input
-                        type="file"
-                        hidden
-                        ref={filePickerRef}
-                        onChange={addImageToPost}
-                      /> */}
                     </div>
                     <FaceSmileIcon className="h-10 w-10 hoverEffect p-2 text-sky-500 hover:bg-sky-100" />
                   </div>
