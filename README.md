@@ -38,3 +38,37 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+# Next.js App with Tailwind CSS and Authentication via NextAuth.js
+
+This is a Next.js application styled with Tailwind CSS and integrated with authentication using NextAuth.js.
+
+## Getting Started
+
+1. Clone the repository.
+
+2. Install dependencies:
+
+```bash
+npm install
+```
+Create a .env.local file at the root of your project with the following keys:
+```
+NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+NEXTAUTH_SECRET=your_nextauth_secret
+NEXTAUTH_URL=your_nextauth_url
+```
+Replace your_firebase_api_key, your_google_client_id, your_google_client_secret, your_nextauth_secret, and your_nextauth_url with your actual keys and URLs.
+
+Start the development server:
+```bash
+
+npm run dev
+```
+Open http://localhost:3000 in your browser to see the app.
+Notes
+Make sure to keep these keys secure and do not expose them publicly in your code repository or elsewhere.
+
+This project uses Tailwind CSS for styling, so you can customize the styles easily.
